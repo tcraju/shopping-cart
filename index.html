@@ -25,9 +25,9 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button id="minus-btn" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="product-quantity" type="text" class="form-control text-center" value="1">
-                           <button id="plus-btn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="minus-btn-1" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="phone-quantity" type="text" class="form-control text-center" value="1">
+                           <button id="plus-btn-1" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="mobile-phone-price">1219</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="minus-btn-2" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="cover-quantity" type="text" class="form-control text-center" value="1">
+                           <button id="plus-btn-2" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="cover-price">59</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -79,39 +79,63 @@
    </section>
 
    <script>
-      function incrementValue(btnId, productQuantityId, productPrice, productRate) {
-         const plusBtn = document.getElementById(btnId);
-         plusBtn.addEventListener('click', function () {
+      function priceCalculator(btnId, productQuantityId, productPrice, productRate) {
+         const button = document.getElementById(btnId);
+         button.addEventListener('click', function () {
             const quantity = parseFloat(document.getElementById(productQuantityId).value);
+            if (btnId == 'plus-btn-1'||btnId == 'plus-btn-2') {
+               let finalQuantity = document.getElementById(productQuantityId).value = quantity + 1;
+               document.getElementById(productPrice).innerText = productRate * finalQuantity;
 
-
-            const finalQuantity = document.getElementById(productQuantityId).value = quantity + 1;
-            document.getElementById(productPrice).innerText = productRate * finalQuantity;
-         });
-      }
-      incrementValue('plus-btn', 'product-quantity', "mobile-phone-price", 1219)
-
-
-      function decrementValue(btnId, productQuantityId, productPrice, productRate) {
-         const plusBtn = document.getElementById(btnId);
-         plusBtn.addEventListener('click', function () {
-            const quantity = parseFloat(document.getElementById(productQuantityId).value);
-
-            
-            if (quantity > 0) {
-               document.getElementById(productQuantityId).value = quantity - 1;
+            } else if (btnId == 'minus-btn-1'||btnId == 'minus-btn-2') {
+               if (quantity > 0) {
+                  document.getElementById(productQuantityId).value = quantity - 1;
+               }
+                finalQuantity = document.getElementById(productQuantityId).value;
+               document.getElementById(productPrice).innerText = productRate * finalQuantity;
             }
-            const finalQuantity = document.getElementById(productQuantityId).value;
-
-            document.getElementById(productPrice).innerText = productRate * finalQuantity;
          });
       }
-      decrementValue('minus-btn', 'product-quantity', "mobile-phone-price", 1219)
+      priceCalculator('plus-btn-1', 'phone-quantity', "mobile-phone-price", 1219);
+      priceCalculator('minus-btn-1', 'phone-quantity', "mobile-phone-price", 1219);
+      priceCalculator('plus-btn-2', 'cover-quantity', "cover-price", 59);
+      priceCalculator('minus-btn-2', 'cover-quantity', "cover-price", 59)
 
 
 
 
-      
+
+      // function incrementValue(btnId, productQuantityId, productPrice, productRate) {
+      //    const plusBtn = document.getElementById(btnId);
+      //    plusBtn.addEventListener('click', function () {
+      //       const quantity = parseFloat(document.getElementById(productQuantityId).value);
+
+
+      //       const finalQuantity = document.getElementById(productQuantityId).value = quantity + 1;
+      //       document.getElementById(productPrice).innerText = productRate * finalQuantity;
+      //    });
+      // }
+      // incrementValue('plus-btn', 'product-quantity', "mobile-phone-price", 1219)
+
+
+      // function decrementValue(btnId, productQuantityId, productPrice, productRate) {
+      //    const plusBtn = document.getElementById(btnId);
+      //    plusBtn.addEventListener('click', function () {
+      //       const quantity = parseFloat(document.getElementById(productQuantityId).value);
+
+      //       if (quantity > 0) {
+      //          document.getElementById(productQuantityId).value = quantity - 1;
+      //       }
+      //       const finalQuantity = document.getElementById(productQuantityId).value;
+      //       document.getElementById(productPrice).innerText = productRate * finalQuantity;
+      //    });
+      // }
+      // decrementValue('minus-btn', 'product-quantity', "mobile-phone-price", 1219)
+
+
+
+
+
       // const plusBtn = document.getElementById('plus-btn');
       // plusBtn.addEventListener('click', function () {
       //    const quantity = parseFloat(document.getElementById('product-quantity').value);
