@@ -30,7 +30,7 @@
                            <button id="plus-btn-1" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="mobile-phone-price">1219</span> </h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <img id="remove-btn-1" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -49,7 +49,7 @@
 
                         </div>
                         <h5>$ <span id="cover-price">59</span> </h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <img id="remove-btn-2" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -82,34 +82,35 @@
       function priceCalculator(btnId, productQuantityId, productPrice, productRate) {
          const button = document.getElementById(btnId);
          button.addEventListener('click', function () {
-            const quantity = parseFloat(document.getElementById(productQuantityId).value);
+            let productQuantity = document.getElementById(productQuantityId);
+            let quantity = parseInt(productQuantity.value);
             if (btnId == 'plus-btn-1' || btnId == 'plus-btn-2') {
-               let finalQuantity = document.getElementById(productQuantityId).value = quantity + 1;
-               document.getElementById(productPrice).innerText = productRate * finalQuantity;
-
+               quantity++;
             } else if (btnId == 'minus-btn-1' || btnId == 'minus-btn-2') {
                if (quantity > 0) { // to avoid negative quantity
-                  document.getElementById(productQuantityId).value = quantity - 1;
+                  quantity--; 
                }
-               finalQuantity = document.getElementById(productQuantityId).value;
-               document.getElementById(productPrice).innerText = productRate * finalQuantity;
-            } //click area end
+            }
+            document.getElementById(productQuantityId).value = quantity;
+            document.getElementById(productPrice).innerText = productRate * quantity; //click area end
 
             // Final calculation area start
+
             let totalMobilePrice = parseFloat(document.getElementById("mobile-phone-price").innerText);
             let totalCoverPrice = parseFloat(document.getElementById("cover-price").innerText);
             let totalPrice = totalMobilePrice + totalCoverPrice;
-            document.getElementById("total-price").innerText = totalPrice;
             let taxRate = 5; // If tax rate = 5% (can vary)
-            document.getElementById("tax").innerText = Math.round(totalPrice * taxRate / 100);
-            document.getElementById("grand-total").innerText = totalPrice + Math.round(totalPrice * taxRate /
-            100);
+            let taxAmount = Math.round(totalPrice * taxRate / 100);
+
+            document.getElementById("total-price").innerText = totalPrice;
+            document.getElementById("tax").innerText = taxAmount;
+            document.getElementById("grand-total").innerText = totalPrice + taxAmount;
          });
       }
       priceCalculator('plus-btn-1', 'phone-quantity', "mobile-phone-price", 1219);
       priceCalculator('minus-btn-1', 'phone-quantity', "mobile-phone-price", 1219);
       priceCalculator('plus-btn-2', 'cover-quantity', "cover-price", 59);
-      priceCalculator('minus-btn-2', 'cover-quantity', "cover-price", 59)
+      priceCalculator('minus-btn-2', 'cover-quantity', "cover-price", 59);
    </script>
 </body>
 
