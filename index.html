@@ -26,11 +26,12 @@
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
                            <button id="minus-btn-1" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="phone-quantity" type="text" class="form-control text-center" value="1">
+                           <input id="phone-quantity" type="text" class="form-control text-center" value="1"
+                              autocomplete="off">
                            <button id="plus-btn-1" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="mobile-phone-price">1219</span> </h5>
-                        <img id="remove-btn-1" src="images/remove.png" alt="" class="remove-item">
+                        <img id="reset-btn-1" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -44,12 +45,13 @@
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
                            <button id="minus-btn-2" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="cover-quantity" type="text" class="form-control text-center" value="1">
+                           <input id="cover-quantity" type="text" class="form-control text-center" value="1"
+                              autocomplete="off">
                            <button id="plus-btn-2" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
                         <h5>$ <span id="cover-price">59</span> </h5>
-                        <img id="remove-btn-2" src="images/remove.png" alt="" class="remove-item">
+                        <img id="reset-btn-2" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -80,7 +82,11 @@
 
    <script>
       function priceCalculator(btnId, productQuantityId, productPrice, productRate) {
+
+         // document.getElementById(productQuantityId).value = 1; // to reset product quantity in reload browser ( in input tag (html) autocomplete off also work )
+
          const button = document.getElementById(btnId);
+
          button.addEventListener('click', function () {
             let productQuantity = document.getElementById(productQuantityId);
             let quantity = parseInt(productQuantity.value);
@@ -88,13 +94,15 @@
                quantity++;
             } else if (btnId == 'minus-btn-1' || btnId == 'minus-btn-2') {
                if (quantity > 0) { // to avoid negative quantity
-                  quantity--; 
+                  quantity--;
                }
+            } else if (btnId == 'reset-btn-1' || btnId == 'reset-btn-2') { // to reset product quantity and price
+               quantity = 0; // quantity = quantity also will work because rate = 0
             }
             document.getElementById(productQuantityId).value = quantity;
             document.getElementById(productPrice).innerText = productRate * quantity; //click area end
 
-            // Final calculation area start
+            // ..............Final calculation area start...............................
 
             let totalMobilePrice = parseFloat(document.getElementById("mobile-phone-price").innerText);
             let totalCoverPrice = parseFloat(document.getElementById("cover-price").innerText);
@@ -107,10 +115,15 @@
             document.getElementById("grand-total").innerText = totalPrice + taxAmount;
          });
       }
+      //................calling function for each of the button..........................
       priceCalculator('plus-btn-1', 'phone-quantity', "mobile-phone-price", 1219);
       priceCalculator('minus-btn-1', 'phone-quantity', "mobile-phone-price", 1219);
+
       priceCalculator('plus-btn-2', 'cover-quantity', "cover-price", 59);
       priceCalculator('minus-btn-2', 'cover-quantity', "cover-price", 59);
+
+      priceCalculator('reset-btn-1', 'phone-quantity', "mobile-phone-price", 0); // to reset product quantity and price
+      priceCalculator('reset-btn-2', 'cover-quantity', "cover-price", 0);
    </script>
 </body>
 
